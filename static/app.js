@@ -1,7 +1,7 @@
 const mainContent = document.querySelector(".wrapper__main");
 const numberWithCommas = (x) => {
     if (typeof x !== "undefined")
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(" ", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 
@@ -27,17 +27,21 @@ const html = (link_to_channel, logo, channel_title, num_sub, num_vid, num_view) 
 </div>
 `)
 }
-console.log(html().trim())
 const one_channel = (data) => {
     data.map(channel => {
-        const param_html = [channel.customUrl, channel.thumbnails.default.url, channel.title, channel.statistics.subscriberCount,
+        const param_html = [channel.customUrl, channel.thumbnails.medium.url, channel.title, channel.statistics.subscriberCount,
         channel.statistics.videoCount, channel.statistics.viewCount]
+        if(!width_mobile){
+            param_html[1]=channel.thumbnails.high.url
+        }
         let newArt = document.createElement("article");
         newArt.classList.add("channel")
         newArt.innerHTML = html(...param_html)
         mainContent.appendChild(newArt)
     })
 }
+
+const width_mobile = window.matchMedia("(max-width: 800px)");
 
 const getChannels = async () => {
     try {

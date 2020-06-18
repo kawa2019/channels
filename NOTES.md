@@ -3,3 +3,6 @@
 -dodanie przykładowego kanału z css tak aby poznać jaki html będzie potrzebny by zrobić kilka kanałów
 
 stworzenie widoku dla 544px szerokości, dodanie przecinków w liczbach, 
+wymiana logo na średnie 
+poprawa przecinków dla stringów z pystymi znakami
+ustawienie innego logo dla różnych width
