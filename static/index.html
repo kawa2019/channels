@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JavaScript Youtube Channels</title>
+    <meta name="viewport" content="initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body class="wrapper">
+    <header class="wrapper__header">
+        <h1 class="header"><span class="header__js-logo"></span>JS Channels</h1>
+    </header>
+    <main class="wrapper__main js-content">
+        <article>
+            <span></span>
+            <h2></h2>
+            <span></span>
+            <span></span>
+        </article>
+    </main>
+    <div class="wrapper__filter">
+        <div class="filter">
+            <input class="filter__input" type="text" placeholder="filter channels...">
+        </div>
+    </div>
+    <aside class="wrapper__aside">
+        <div class="sort">
+            <h3 class="sort__header">Sort channels by:</h3>
+            <ul class="sort__options">
+                <li>
+                    <input class="choice choice--radio" name="sort" type="radio" id="sort-title">
+                    <label class="choice__label" for="sort-title">title</label>
+                </li>
+                <li>
+                    <input class="choice choice--radio" name="sort" type="radio" id="sort-subscribers">
+                    <label class="choice__label" for="sort-subscribers">subscribers</label>
+                </li>
+                <li>
+                    <input class="choice choice--radio" name="sort" type="radio" id="sort-videos">
+                    <label class="choice__label" for="sort-videos">videos</label>
+                </li>
+                <li>
+                    <input class="choice choice--radio" name="sort" type="radio" id="sort-views">
+                    <label class="choice__label" for="sort-views">views</label>
+                </li>
+            </ul>
+            <button class="button">Clear</button>
+        </div>
+    </aside>
+    <script src="app.js"></script>
+</body>
+
+</html>

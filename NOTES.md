@@ -1,0 +1,2 @@
+-w html dodałem vieport
+-json server zainstalowałem paczkę ,przepuściłem przez validator oraz całą bazę dałem w object
