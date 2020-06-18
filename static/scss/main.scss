@@ -1,7 +1,8 @@
+$light_grey: #eceff1;
 .header {
     margin-left: 27px;
     position: relative;
-    .header__js-logo{
+    .header__js-logo {
         position: absolute;
         display: inline-block;
         background-color: #fbba1f;
@@ -12,9 +13,44 @@
         z-index: -1;
     }
 }
-
-@media only screen and (min-width: 544px) {
-    .header {
-        color: green;
+@media only screen and (max-width: 544px) {
+    .channel {
+        background-color: red;
+        width: 100vw;
+        height: 266px;
+        border: 1px solid transparent;
+        margin-top: 10px;
+        .logo {
+            display: block;
+            background-image: url("https://yt3.ggpht.com/a-/AN66SAzjMJRUuJm10kRK7ybMLDmXtRH71_F1YapMjw=s800-mo-c-c0xffffffff-rj-k-no");
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 2px solid $light_grey;
+            margin-top: 10px;
+        }
+        .channel_title {
+            text-align: center;
+            margin: 10px;
+        }
+        .all_numbers {
+            display: flex;
+            justify-content: space-around;
+            .numbers {
+                margin: 5px;
+                span {
+                    display: block;
+                }
+                .sub_vid_view {
+                    color: $light_grey;
+                }
+                .num_sub_vid_view {
+                    font-size: 18px;
+                }
+            }
+        }
     }
 }
