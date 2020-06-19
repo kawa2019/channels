@@ -6,3 +6,6 @@ stworzenie widoku dla 544px szerokości, dodanie przecinków w liczbach,
 wymiana logo na średnie 
 poprawa przecinków dla stringów z pystymi znakami
 ustawienie innego logo dla różnych width
+jedno logo medium 
+RWD całe
+napisanie funckji dla sortowania po tytule dla zrobienia generycznej funkcji
