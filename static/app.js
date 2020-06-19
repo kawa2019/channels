@@ -1,17 +1,37 @@
 const mainContent = document.querySelector(".wrapper__main");
-const sort_title = document.querySelector("#sort-title");
+const inputs_to_clear_radio = [...document.querySelectorAll(".choice--radio")];
 const dataGlobal = []
 let executed_title = false
 let executed_sub = false
 let executed_vid = false
 let executed_view = false
+
+const clear_inputs = () => {
+    inputs_to_clear_radio.map(input_radio => {
+        input_radio.checked = false
+    })
+}
+const filter_by_search = (data) => {
+    const input_to_search = document.querySelector(".filter__input");
+    input_to_search.addEventListener("change", () => {
+        mainContent.innerHTML = ""
+        const data_filter = data.filter(channel => {
+            const is_there = channel.title.toLowerCase().includes(input_to_search.value.toLowerCase())
+            if (is_there) {
+                return channel
+            }
+        });
+        console.log(data_filter)
+        one_channel(data_filter)
+    })
+}
+
 let check_input_sort = (data) => {
     const inputs_to_sort = [...document.querySelectorAll(".choice__label")];
     inputs_to_sort.map((input, index) => {
         if (index === 0) {
             const btn_sort = document.querySelector(`label[for=${input.htmlFor}]`)
             btn_sort.addEventListener("click", (event) => {
-                console.log("kamil")
                 if (!executed_title) {
                     mainContent.innerHTML = ""
                     executed_title = true
@@ -115,4 +135,4 @@ const getChannels = async () => {
         mainContent.innerText = "Problem is " + error
     }
 }
-getChannels(check_input_sort(dataGlobal))
+getChannels(check_input_sort(dataGlobal), filter_by_search(dataGlobal))
