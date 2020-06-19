@@ -31,9 +31,9 @@ const one_channel = (data) => {
     data.map(channel => {
         const param_html = [channel.customUrl, channel.thumbnails.medium.url, channel.title, channel.statistics.subscriberCount,
         channel.statistics.videoCount, channel.statistics.viewCount]
-        if(!width_mobile){
-            param_html[1]=channel.thumbnails.high.url
-        }
+        // if(!width_mobile){
+        //     param_html[1]=channel.thumbnails.high.url
+        // }
         let newArt = document.createElement("article");
         newArt.classList.add("channel")
         newArt.innerHTML = html(...param_html)
@@ -41,7 +41,7 @@ const one_channel = (data) => {
     })
 }
 
-const width_mobile = window.matchMedia("(max-width: 800px)");
+//const width_mobile = window.matchMedia("(max-width: 1100px)");
 
 const getChannels = async () => {
     try {
