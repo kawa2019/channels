@@ -1,22 +1,46 @@
 const mainContent = document.querySelector(".wrapper__main");
 const sort_title = document.querySelector("#sort-title");
 const dataGlobal = []
-const check_input_sort = (data) => {
-    mainContent.innerHTML=""
+let check_input_sort = (data) => {
+    mainContent.innerHTML = ""
     const input = document.querySelector(`label[for="sort-title"]`)
-    console.log(dataGlobal.length)
-    input.addEventListener("click", () => {
-        data.sort((a, b) => {
-            if (a.title.toLowerCase() < b.title.toLowerCase()) { return -1; }
-            if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; }
-            return 0;
-        });one_channel(data)
+    const inputs_to_sort = [...document.querySelectorAll(".choice__label")];
+    inputs_to_sort.map((input, index) => {
+        if (index === 0) {
+            const btn_sort = document.querySelector(`label[for=${input.htmlFor}]`)
+            btn_sort.addEventListener("click", () => {
+                data.sort((a, b) => {
+                    if (a.title.toLowerCase() < b.title.toLowerCase()) { return -1; }
+                    if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; }
+                    return 0;
+                }); one_channel(data)
+            });
+        } else {
+            const btn_sort = document.querySelector(`label[for=${input.htmlFor}]`);
+            btn_sort.addEventListener("click", () => {
+                mainContent.innerHTML = ""
+                if (index == 1) {
+                    mainContent.innerHTML = ""
+                    data.sort((a, b) => +numberWithCommas(a.statistics.subscriberCount).replace(/\,/g,"") - +numberWithCommas(b.statistics.subscriberCount).replace(/\,/g,""))
+                    console.log(data)
+                    one_channel(data)
+                } else if (index == 2) {
+                    mainContent.innerHTML = ""
+                    data.sort((a, b) => +numberWithCommas(a.statistics.videoCount).replace(/\,/g,"") - +numberWithCommas(b.statistics.videoCount).replace(/\,/g,""))
+                    one_channel(data)
+                } else {
+                    mainContent.innerHTML = ""
+                    data.sort((a, b) => +numberWithCommas(a.statistics.viewCount).replace(/\,/g,"") - +numberWithCommas(b.statistics.viewCount).replace(/\,/g,""))
+                    one_channel(data)
+                }
+            });
+        }
     })
 }
 
 const numberWithCommas = (x) => {
     if (typeof x !== "undefined")
-        return x.toString().replace(" ", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(" ", "").replace(/\./g, "").replace(/\s/g,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 
@@ -62,7 +86,7 @@ const getChannels = async () => {
             console.log(data)
             dataGlobal.push(...data)
             one_channel(data)
-            
+
         } else {
             throw ("404 not found")
         }
