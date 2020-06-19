@@ -1,36 +1,57 @@
 const mainContent = document.querySelector(".wrapper__main");
 const sort_title = document.querySelector("#sort-title");
 const dataGlobal = []
+let executed_title = false
+let executed_sub = false
+let executed_vid = false
+let executed_view = false
 let check_input_sort = (data) => {
-    mainContent.innerHTML = ""
-    const input = document.querySelector(`label[for="sort-title"]`)
     const inputs_to_sort = [...document.querySelectorAll(".choice__label")];
     inputs_to_sort.map((input, index) => {
         if (index === 0) {
             const btn_sort = document.querySelector(`label[for=${input.htmlFor}]`)
-            btn_sort.addEventListener("click", () => {
-                data.sort((a, b) => {
-                    if (a.title.toLowerCase() < b.title.toLowerCase()) { return -1; }
-                    if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; }
-                    return 0;
-                }); one_channel(data)
+            btn_sort.addEventListener("click", (event) => {
+                console.log("kamil")
+                if (!executed_title) {
+                    mainContent.innerHTML = ""
+                    executed_title = true
+                    executed_vid = false
+                    executed_sub = false
+                    executed_view = false
+                    data.sort((a, b) => {
+                        if (a.title.toLowerCase() < b.title.toLowerCase()) { return -1; }
+                        if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; }
+                        return 0;
+                    })
+                    one_channel(data)
+                } else { return }
             });
         } else {
             const btn_sort = document.querySelector(`label[for=${input.htmlFor}]`);
-            btn_sort.addEventListener("click", () => {
-                mainContent.innerHTML = ""
-                if (index == 1) {
+            btn_sort.addEventListener("click", (event) => {
+                if (index == 1 && !executed_sub) {
                     mainContent.innerHTML = ""
-                    data.sort((a, b) => +numberWithCommas(a.statistics.subscriberCount).replace(/\,/g,"") - +numberWithCommas(b.statistics.subscriberCount).replace(/\,/g,""))
-                    console.log(data)
+                    executed_sub = true
+                    executed_vid = false
+                    executed_title = false
+                    executed_view = false
+                    data.sort((a, b) => +numberWithCommas(a.statistics.subscriberCount).replace(/\,/g, "") - +numberWithCommas(b.statistics.subscriberCount).replace(/\,/g, ""))
                     one_channel(data)
-                } else if (index == 2) {
+                } else if (index == 2 && !executed_vid) {
                     mainContent.innerHTML = ""
-                    data.sort((a, b) => +numberWithCommas(a.statistics.videoCount).replace(/\,/g,"") - +numberWithCommas(b.statistics.videoCount).replace(/\,/g,""))
+                    executed_vid = true
+                    executed_sub = false
+                    executed_view = false
+                    executed_title = false
+                    data.sort((a, b) => +numberWithCommas(a.statistics.videoCount).replace(/\,/g, "") - +numberWithCommas(b.statistics.videoCount).replace(/\,/g, ""))
                     one_channel(data)
-                } else {
+                } else if (index === 3 && !executed_view) {
                     mainContent.innerHTML = ""
-                    data.sort((a, b) => +numberWithCommas(a.statistics.viewCount).replace(/\,/g,"") - +numberWithCommas(b.statistics.viewCount).replace(/\,/g,""))
+                    executed_view = true
+                    executed_sub = false
+                    executed_vid = false
+                    executed_title = false
+                    data.sort((a, b) => +numberWithCommas(a.statistics.viewCount).replace(/\,/g, "") - +numberWithCommas(b.statistics.viewCount).replace(/\,/g, ""))
                     one_channel(data)
                 }
             });
@@ -40,12 +61,11 @@ let check_input_sort = (data) => {
 
 const numberWithCommas = (x) => {
     if (typeof x !== "undefined")
-        return x.toString().replace(" ", "").replace(/\./g, "").replace(/\s/g,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(" ", "").replace(/\./g, "").replace(/\s/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 
 const html = (link_to_channel, logo, channel_title, num_sub, num_vid, num_view) => {
-
     return (`
 <a href=${link_to_channel} class="logo" style="background-image: url(${logo})">
 </a>
@@ -67,7 +87,6 @@ const html = (link_to_channel, logo, channel_title, num_sub, num_vid, num_view) 
 `)
 }
 const one_channel = (data) => {
-    check_input_sort(data)
     data.map(channel => {
         const param_html = [channel.customUrl, channel.thumbnails.medium.url, channel.title, channel.statistics.subscriberCount,
         channel.statistics.videoCount, channel.statistics.viewCount]

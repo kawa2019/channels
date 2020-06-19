@@ -9,3 +9,5 @@ ustawienie innego logo dla różnych width
 jedno logo medium 
 RWD całe
 napisanie funckji dla sortowania po tytule dla zrobienia generycznej funkcji
+napisanie ogólnej funkcji sortującej
+-dodanie aby funkcja sortująca odpalała się tylko raz 
