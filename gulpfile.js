@@ -1,4 +1,5 @@
 const gulp = require("gulp");
+const babel = require('gulp-babel');
 //const jshint = require("gulp-jshint");
 const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
@@ -18,10 +19,13 @@ gulp.task("sass", function () {
       .pipe(gulp.dest(dirPath + "/css"));
 });
 
-gulp.task("hello", function (done) {
-   console.log("hello.gulp")
-   done();
-});
+gulp.task('default', () =>
+   gulp.src(dirPath+"/js/app.js")
+      .pipe(babel({
+         plugins: ['@babel/transform-runtime']
+     }))
+      .pipe(gulp.dest(dirPath+"/js/bundle"))
+);
 
 // gulp.task("jshint", function () {
 //    return gulp.src(dirPath + "/**/*.js")
