@@ -14,3 +14,6 @@ b.Funkcja na inputach wykonuje się tylko raz
 
 Filtrowanie po wpisanym tekście:
 a.nadaje inputowi event change i wykonuje funkcje one_channel od przefiltrowanej tablicy
+
+20.06
+Dodałem funkcje sort_select która sortuje każdy select listę kanałów za pomocą parametrów  
