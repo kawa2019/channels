@@ -16,8 +16,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const sort_select = (data, x, y) => {
         if (typeof y !== "undefined") {
             data.sort((a, b) => {
-                return (+numberWithCommas(a[x][y]).replace(/\,/g, "") -
-                    +numberWithCommas(b[x][y]).replace(/\,/g, ""))
+                return (+a[x][y].replace(/[," ".]/, "") -
+                    +b[x][y].replace(/[," ".]/, ""))
             })
         } else {
             data.sort((a, b) => {
@@ -95,7 +95,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     const numberWithCommas = (x) => {
         if (typeof x !== "undefined")
-            return x.toString().replace(" ", "").replace(/\./g, "").replace(/\s/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return x.toString().replace(/\[" ".]B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     //body one channel

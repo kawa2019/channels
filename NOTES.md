@@ -17,3 +17,6 @@ a.nadaje inputowi event change i wykonuje funkcje one_channel od przefiltrowanej
 
 20.06
 Dodałem funkcje sort_select która sortuje każdy select listę kanałów za pomocą parametrów  
+
+21.06
+Babel do kompilacji js działa, użyłem scriptu który wspomaga async/await funkcje, poprawiłem wyrażenie regularne do przecinków w liczbach

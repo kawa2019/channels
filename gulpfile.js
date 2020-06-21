@@ -20,11 +20,11 @@ gulp.task("sass", function () {
 });
 
 gulp.task('default', () =>
-   gulp.src(dirPath+"/js/app.js")
+   gulp.src(dirPath + "/js/app.js")
       .pipe(babel({
-         plugins: ['@babel/transform-runtime']
-     }))
-      .pipe(gulp.dest(dirPath+"/js/bundle"))
+         presets: ['@babel/env']
+      }))
+      .pipe(gulp.dest(dirPath + "/js/bundle"))
 );
 
 // gulp.task("jshint", function () {
