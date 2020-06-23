@@ -21,7 +21,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
   var inputs_to_clear_radio = _toConsumableArray(document.querySelectorAll(".choice--radio"));
 
-  var dataGlobal = [];
   var executed_title = false;
   var executed_sub = false;
   var executed_vid = false;
@@ -37,7 +36,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
   var sort_select = function sort_select(data, x, y) {
     if (typeof y !== "undefined") {
       data.sort(function (a, b) {
-        return +numberWithCommas(a[x][y]).replace(/\,/g, "") - +numberWithCommas(b[x][y]).replace(/\,/g, "");
+        return +a[x][y].replace(/[," ".]/, "") - +b[x][y].replace(/[," ".]/, "");
       });
     } else {
       data.sort(function (a, b) {
@@ -66,7 +65,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
           return channel;
         }
       });
-      console.log(data_filter);
       one_channel(data_filter);
     });
   }; //adding sort function to input select 
@@ -126,7 +124,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
   };
 
   var numberWithCommas = function numberWithCommas(x) {
-    if (typeof x !== "undefined") return x.toString().replace(" ", "").replace(/\./g, "").replace(/\s/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (typeof x !== "undefined") return x.toString().replace(/\[" ".]B(?=(\d{3})+(?!\d))/g, ",");
   }; //body one channel
 
 
@@ -161,7 +159,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
               response = _context.sent;
 
               if (!response.ok) {
-                _context.next = 13;
+                _context.next = 14;
                 break;
               }
 
@@ -171,31 +169,32 @@ window.addEventListener('DOMContentLoaded', function (event) {
             case 7:
               data = _context.sent;
               console.log(data);
-              dataGlobal.push.apply(dataGlobal, _toConsumableArray(data));
               one_channel(data);
-              _context.next = 14;
+              check_input_sort(data);
+              filter_by_search(data);
+              _context.next = 15;
               break;
-
-            case 13:
-              throw "404 not found";
 
             case 14:
-              _context.next = 21;
+              throw "404 not found";
+
+            case 15:
+              _context.next = 22;
               break;
 
-            case 16:
-              _context.prev = 16;
+            case 17:
+              _context.prev = 17;
               _context.t0 = _context["catch"](0);
               alert(_context.t0);
               console.log(_context.t0);
               mainContent.innerText = "Problem is " + _context.t0;
 
-            case 21:
+            case 22:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 16]]);
+      }, _callee, null, [[0, 17]]);
     }));
 
     return function getChannels() {
@@ -203,5 +202,5 @@ window.addEventListener('DOMContentLoaded', function (event) {
     };
   }();
 
-  getChannels(check_input_sort(dataGlobal), filter_by_search(dataGlobal));
+  getChannels();
 });

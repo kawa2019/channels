@@ -20,3 +20,6 @@ Dodałem funkcje sort_select która sortuje każdy select listę kanałów za po
 
 21.06
 Babel do kompilacji js działa, użyłem scriptu który wspomaga async/await funkcje, poprawiłem wyrażenie regularne do przecinków w liczbach
+
+23.06
+Usunięcie w wywołaniu funkcji getChannels callbacków i ich w przypadku prawidłowego wykonania zapytania

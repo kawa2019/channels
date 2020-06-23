@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     const mainContent = document.querySelector(".wrapper__main");
     const inputs_to_clear_radio = [...document.querySelectorAll(".choice--radio")];
-    const dataGlobal = []
     let executed_title = false
     let executed_sub = false
     let executed_vid = false
@@ -12,7 +11,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             input_radio.checked = false
         })
     }
-//sort by select
+    //sort by select
     const sort_select = (data, x, y) => {
         if (typeof y !== "undefined") {
             data.sort((a, b) => {
@@ -39,7 +38,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     return channel
                 }
             });
-            console.log(data_filter)
             one_channel(data_filter)
         })
     }
@@ -139,10 +137,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data)
-                dataGlobal.push(...data)
-
                 one_channel(data)
-
+                check_input_sort(data)
+                filter_by_search(data)
             } else {
                 throw ("404 not found")
             }
@@ -152,5 +149,5 @@ window.addEventListener('DOMContentLoaded', (event) => {
             mainContent.innerText = "Problem is " + error
         }
     }
-    getChannels(check_input_sort(dataGlobal), filter_by_search(dataGlobal))
+    getChannels()
 })
