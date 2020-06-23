@@ -36,7 +36,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
   var sort_select = function sort_select(data, x, y) {
     if (typeof y !== "undefined") {
       data.sort(function (a, b) {
-        return +a[x][y].replace(/[," ".]/, "") - +b[x][y].replace(/[," ".]/, "");
+        return +a[x][y].replace(/[" ".,]/g, "") - +b[x][y].replace(/[" ".,]/g, "");
       });
     } else {
       data.sort(function (a, b) {
@@ -124,7 +124,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
   };
 
   var numberWithCommas = function numberWithCommas(x) {
-    if (typeof x !== "undefined") return x.toString().replace(/\[" ".]B(?=(\d{3})+(?!\d))/g, ",");
+    if (typeof x !== "undefined") return x.toString().replace(/[.," "]/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }; //body one channel
 
 

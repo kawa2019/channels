@@ -35,5 +35,6 @@ gulp.task('default', () =>
 
 gulp.task("watch", function () {
    gulp.watch(dirPath + "/scss/**/*.scss", gulp.series("sass"));
+    gulp.watch(dirPath+"/js/app.js", gulp.series("default"));
    // gulp.watch(dirPath+"/js/**/*.js", gulp.series("jshint"));
 })  
