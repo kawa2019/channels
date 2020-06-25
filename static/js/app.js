@@ -11,6 +11,77 @@ window.addEventListener('DOMContentLoaded', (event) => {
             input_radio.checked = false
         })
     }
+
+    // show suggestions
+    const suggest = (data, inp) => {
+        const array_of_titles = data.map(channel => channel.title)
+        // let currentFocus;
+        inp.addEventListener("input", e => {
+            console.log(inp)
+            const value = inp.value
+            console.log(value)
+            closeAllLists();
+            if (!value) { return false; }
+            // currentFocus = -1;
+            let a = document.createElement("DIV");
+            a.classList.add("autocomplete-list")
+            inp.parentNode.appendChild(a);
+            array_of_titles.map(title => {
+                if (title.substr(0, value.length).toUpperCase() == value.toUpperCase()) {
+                    let b = document.createElement("DIV");
+                    b.innerHTML = `<strong>${title.substr(0, value.length)}</strong>${title.substr(value.length)}`
+                    b.innerHTML += `<input type='hidden' value='${title}'>`
+                    b.addEventListener("click", e => {
+                        inp.value = b.querySelector("input").value;
+                        const input_event = new Event("input");
+                        inp.dispatchEvent(input_event)
+                        closeAllLists();
+                    })
+                    a.appendChild(b);
+                }
+            })
+        })
+        // inp.addEventListener("keydown", e => {
+        //     let x = document.querySelector(".autocomplete-list");
+        //     console.log(x)
+        //     if (x) x = x.getElementsByTagName("div");
+        //     if (e.keyCode == 40) {
+        //         currentFocus++;
+        //         addActive(x);
+        //     } else if (e.keyCode == 38) {
+        //         currentFocus--;
+        //         addActive(x);
+        //     } else if (e.keyCode == 13) {
+        //         e.preventDefault();
+        //         if (currentFocus > -1) {
+        //             if (x) x[currentFocus].click();
+        //         }
+        //     }
+        // })
+        // const addActive = x => {
+        //     if (!x) return false;
+        //     removeActive(x);
+        //     if (currentFocus >= x.length) currentFocus = 0;
+        //     if (currentFocus < 0) currentFocus = (x.length - 1);
+        //     x[currentFocus].classList.add("autocomplete-active");
+        // }
+        // const removeActive = x => {
+        //     for (var i = 0; i < x.length; i++) {
+        //         x[i].classList.remove("autocomplete-active");
+        //     }
+        // }
+        const closeAllLists = elmnt => {
+            var x = [...document.getElementsByClassName("autocomplete-list")];
+            x.map(list => {
+                if (elmnt !== list && elmnt !== inp) {
+                    document.querySelector(`.${list.className}`).parentNode.removeChild(list);
+                }
+            })
+        }
+        document.addEventListener("click", e => {
+            closeAllLists(e.target);
+        })
+    }
     //sort by select
     const sort_select = (data, x, y) => {
         if (typeof y !== "undefined") {
@@ -30,15 +101,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
     //filter by search
     const filter_by_search = (data) => {
         const input_to_search = document.querySelector(".filter__input");
-        input_to_search.addEventListener("change", () => {
-            mainContent.innerHTML = ""
-            const data_filter = data.filter(channel => {
-                const is_there = channel.title.toLowerCase().includes(input_to_search.value.toLowerCase())
-                if (is_there) {
-                    return channel
-                }
-            });
-            one_channel(data_filter)
+        input_to_search.addEventListener("input", event => {
+            // if (event.keyCode === 13) {
+                mainContent.innerHTML = ""
+                const data_filter = data.filter(channel => {
+                    const is_there = channel.title.toLowerCase().includes(input_to_search.value.toLowerCase())
+                    if (is_there) {
+                        return channel
+                    }
+                });
+                one_channel(data_filter)
+            //}
         })
     }
     //adding sort function to input select 
@@ -93,7 +166,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     const numberWithCommas = (x) => {
         if (typeof x !== "undefined")
-            return x.toString().replace(/[.," "]/g,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return x.toString().replace(/[.," "]/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     //body one channel
@@ -140,6 +213,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 one_channel(data)
                 check_input_sort(data)
                 filter_by_search(data)
+                suggest(data, document.querySelector(".filter__input"))
             } else {
                 throw ("404 not found")
             }

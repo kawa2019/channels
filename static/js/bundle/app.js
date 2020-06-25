@@ -30,6 +30,85 @@ window.addEventListener('DOMContentLoaded', function (event) {
     inputs_to_clear_radio.map(function (input_radio) {
       input_radio.checked = false;
     });
+  }; // show suggestions
+
+
+  var suggest = function suggest(data, inp) {
+    var array_of_titles = data.map(function (channel) {
+      return channel.title;
+    }); // let currentFocus;
+
+    inp.addEventListener("input", function (e) {
+      console.log(inp);
+      var value = inp.value;
+      console.log(value);
+      closeAllLists();
+
+      if (!value) {
+        return false;
+      } // currentFocus = -1;
+
+
+      var a = document.createElement("DIV");
+      a.classList.add("autocomplete-list");
+      inp.parentNode.appendChild(a);
+      array_of_titles.map(function (title) {
+        if (title.substr(0, value.length).toUpperCase() == value.toUpperCase()) {
+          var b = document.createElement("DIV");
+          b.innerHTML = "<strong>".concat(title.substr(0, value.length), "</strong>").concat(title.substr(value.length));
+          b.innerHTML += "<input type='hidden' value='".concat(title, "'>");
+          b.addEventListener("click", function (e) {
+            inp.value = b.querySelector("input").value;
+            var input_event = new Event("input");
+            inp.dispatchEvent(input_event);
+            closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      });
+    }); // inp.addEventListener("keydown", e => {
+    //     let x = document.querySelector(".autocomplete-list");
+    //     console.log(x)
+    //     if (x) x = x.getElementsByTagName("div");
+    //     if (e.keyCode == 40) {
+    //         currentFocus++;
+    //         addActive(x);
+    //     } else if (e.keyCode == 38) {
+    //         currentFocus--;
+    //         addActive(x);
+    //     } else if (e.keyCode == 13) {
+    //         e.preventDefault();
+    //         if (currentFocus > -1) {
+    //             if (x) x[currentFocus].click();
+    //         }
+    //     }
+    // })
+    // const addActive = x => {
+    //     if (!x) return false;
+    //     removeActive(x);
+    //     if (currentFocus >= x.length) currentFocus = 0;
+    //     if (currentFocus < 0) currentFocus = (x.length - 1);
+    //     x[currentFocus].classList.add("autocomplete-active");
+    // }
+    // const removeActive = x => {
+    //     for (var i = 0; i < x.length; i++) {
+    //         x[i].classList.remove("autocomplete-active");
+    //     }
+    // }
+
+    var closeAllLists = function closeAllLists(elmnt) {
+      var x = _toConsumableArray(document.getElementsByClassName("autocomplete-list"));
+
+      x.map(function (list) {
+        if (elmnt !== list && elmnt !== inp) {
+          document.querySelector(".".concat(list.className)).parentNode.removeChild(list);
+        }
+      });
+    };
+
+    document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+    });
   }; //sort by select
 
 
@@ -56,7 +135,8 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
   var filter_by_search = function filter_by_search(data) {
     var input_to_search = document.querySelector(".filter__input");
-    input_to_search.addEventListener("change", function () {
+    input_to_search.addEventListener("input", function (event) {
+      // if (event.keyCode === 13) {
       mainContent.innerHTML = "";
       var data_filter = data.filter(function (channel) {
         var is_there = channel.title.toLowerCase().includes(input_to_search.value.toLowerCase());
@@ -65,7 +145,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
           return channel;
         }
       });
-      one_channel(data_filter);
+      one_channel(data_filter); //}
     });
   }; //adding sort function to input select 
 
@@ -159,7 +239,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
               response = _context.sent;
 
               if (!response.ok) {
-                _context.next = 14;
+                _context.next = 15;
                 break;
               }
 
@@ -172,29 +252,30 @@ window.addEventListener('DOMContentLoaded', function (event) {
               one_channel(data);
               check_input_sort(data);
               filter_by_search(data);
-              _context.next = 15;
+              suggest(data, document.querySelector(".filter__input"));
+              _context.next = 16;
               break;
-
-            case 14:
-              throw "404 not found";
 
             case 15:
-              _context.next = 22;
+              throw "404 not found";
+
+            case 16:
+              _context.next = 23;
               break;
 
-            case 17:
-              _context.prev = 17;
+            case 18:
+              _context.prev = 18;
               _context.t0 = _context["catch"](0);
               alert(_context.t0);
               console.log(_context.t0);
               mainContent.innerText = "Problem is " + _context.t0;
 
-            case 22:
+            case 23:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 17]]);
+      }, _callee, null, [[0, 18]]);
     }));
 
     return function getChannels() {
