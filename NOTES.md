@@ -23,3 +23,6 @@ Babel do kompilacji js działa, użyłem scriptu który wspomaga async/await fun
 
 23.06
 Usunięcie w wywołaniu funkcji getChannels callbacków i ich w przypadku prawidłowego wykonania zapytania
+
+25.06
+Dodanie funkcji z sugestiami kanałów. Użyłem boektu event z dispatch aby ręcznie wykonać funkcję input z filter_by_search

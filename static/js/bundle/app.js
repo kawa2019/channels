@@ -36,8 +36,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
   var suggest = function suggest(data, inp) {
     var array_of_titles = data.map(function (channel) {
       return channel.title;
-    }); // let currentFocus;
-
+    });
     inp.addEventListener("input", function (e) {
       console.log(inp);
       var value = inp.value;
@@ -46,8 +45,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
       if (!value) {
         return false;
-      } // currentFocus = -1;
-
+      }
 
       var a = document.createElement("DIV");
       a.classList.add("autocomplete-list");
@@ -66,35 +64,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
           a.appendChild(b);
         }
       });
-    }); // inp.addEventListener("keydown", e => {
-    //     let x = document.querySelector(".autocomplete-list");
-    //     console.log(x)
-    //     if (x) x = x.getElementsByTagName("div");
-    //     if (e.keyCode == 40) {
-    //         currentFocus++;
-    //         addActive(x);
-    //     } else if (e.keyCode == 38) {
-    //         currentFocus--;
-    //         addActive(x);
-    //     } else if (e.keyCode == 13) {
-    //         e.preventDefault();
-    //         if (currentFocus > -1) {
-    //             if (x) x[currentFocus].click();
-    //         }
-    //     }
-    // })
-    // const addActive = x => {
-    //     if (!x) return false;
-    //     removeActive(x);
-    //     if (currentFocus >= x.length) currentFocus = 0;
-    //     if (currentFocus < 0) currentFocus = (x.length - 1);
-    //     x[currentFocus].classList.add("autocomplete-active");
-    // }
-    // const removeActive = x => {
-    //     for (var i = 0; i < x.length; i++) {
-    //         x[i].classList.remove("autocomplete-active");
-    //     }
-    // }
+    });
 
     var closeAllLists = function closeAllLists(elmnt) {
       var x = _toConsumableArray(document.getElementsByClassName("autocomplete-list"));
@@ -136,7 +106,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
   var filter_by_search = function filter_by_search(data) {
     var input_to_search = document.querySelector(".filter__input");
     input_to_search.addEventListener("input", function (event) {
-      // if (event.keyCode === 13) {
       mainContent.innerHTML = "";
       var data_filter = data.filter(function (channel) {
         var is_there = channel.title.toLowerCase().includes(input_to_search.value.toLowerCase());
@@ -145,7 +114,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
           return channel;
         }
       });
-      one_channel(data_filter); //}
+      one_channel(data_filter);
     });
   }; //adding sort function to input select 
 
